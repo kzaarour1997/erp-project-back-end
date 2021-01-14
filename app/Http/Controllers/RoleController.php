@@ -4,11 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use Validator;
+use App\Roles;
 
-use App\Teams;
-
-class TeamController extends Controller
+class RoleController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,8 +15,9 @@ class TeamController extends Controller
      */
     public function index()
     {
-        $teams = Teams::with('employees' , 'projects')->get();
-        return $teams;
+        // $roles = Roles::with('employees' , 'projects')->get();
+        $roles = Roles::with('employees')->get();
+        return $roles;
     }
 
     /**
@@ -40,12 +39,12 @@ class TeamController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
-        $team = new Teams();
-        $team->fill($data);
-        $team->save();
+        $roles = new Roles();
+        $roles->fill($data);
+        $roles->save();
         return response()->json([
             'status' => 200,
-            'team' => $team
+            'roles' => $roles
         ]);
     }
 
@@ -57,7 +56,7 @@ class TeamController extends Controller
      */
     public function show($id)
     {
-        return Teams::where('id',$id)->first();
+        return Roles::where('id',$id)->first();
     }
 
     /**
@@ -80,30 +79,13 @@ class TeamController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $validator = Validator::make($request->all(),[  
-            'name' => 'required|min:3|max:15'
-        ]);
-
-        if($validator->fails()){
-            return response()->json(['error' => $validator->errors()], 401);
-        }
-        
-
         $data = $request->all(); 
-        $team = Teams::where('id' , $id)->first();       
-        $team->firstname = $data['name'];
-        $team->update($data);
-    
-        if($request->image)
-        {
-            $image = $request->image;
-            $name = time().'_' . $image->getClientOriginalName();
-            $filePath = $request->file('image')->storeAs('', $name, 'public');
-            $team['image'] = $name;  
-         }
-         
-         $team->save();
-         return response()->json('Successfully updated');
+        $role = Roles::where('id' , $id)->first();       
+        $role->fill($data);
+        $role->update($data);
+        $role->save();
+
+        return response()->json('Successfully updated');
     }
 
     /**
@@ -114,6 +96,6 @@ class TeamController extends Controller
      */
     public function destroy($id)
     {
-        Teams::where('id' , $id)->delete();
+        Roles::where('id' , $id)->delete();
     }
 }

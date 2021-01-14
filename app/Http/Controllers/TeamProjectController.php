@@ -3,12 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Teams_Projects;
 
-use Validator;
-
-use App\Teams;
-
-class TeamController extends Controller
+class TeamProjectController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,8 +14,7 @@ class TeamController extends Controller
      */
     public function index()
     {
-        $teams = Teams::with('employees' , 'projects')->get();
-        return $teams;
+      //
     }
 
     /**
@@ -40,12 +36,12 @@ class TeamController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
-        $team = new Teams();
-        $team->fill($data);
-        $team->save();
+        $teamproject = new Teams_Projects();
+        $teamproject->fill($data);
+        $teamproject->save();
         return response()->json([
             'status' => 200,
-            'team' => $team
+            'teamproject' => $teamproject
         ]);
     }
 
@@ -57,7 +53,7 @@ class TeamController extends Controller
      */
     public function show($id)
     {
-        return Teams::where('id',$id)->first();
+        //
     }
 
     /**
@@ -80,30 +76,7 @@ class TeamController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $validator = Validator::make($request->all(),[  
-            'name' => 'required|min:3|max:15'
-        ]);
-
-        if($validator->fails()){
-            return response()->json(['error' => $validator->errors()], 401);
-        }
-        
-
-        $data = $request->all(); 
-        $team = Teams::where('id' , $id)->first();       
-        $team->firstname = $data['name'];
-        $team->update($data);
-    
-        if($request->image)
-        {
-            $image = $request->image;
-            $name = time().'_' . $image->getClientOriginalName();
-            $filePath = $request->file('image')->storeAs('', $name, 'public');
-            $team['image'] = $name;  
-         }
-         
-         $team->save();
-         return response()->json('Successfully updated');
+        //
     }
 
     /**
@@ -114,6 +87,6 @@ class TeamController extends Controller
      */
     public function destroy($id)
     {
-        Teams::where('id' , $id)->delete();
+        //
     }
 }
