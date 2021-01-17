@@ -17,7 +17,8 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        $employees = Employees::with('teams' , 'kpis','projects')->get();
+        // return Employees::find(67)->roles;
+        $employees = Employees::with('teams','projects' ,'kpis', 'projects.roles')->get();
         return $employees;
     }
 

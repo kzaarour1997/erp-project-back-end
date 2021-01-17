@@ -14,7 +14,9 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        $project = Projects::with('employees','teams')->get();
+        // return Projects::find(1);
+        // $project = Projects::with('employees','teams')->get();
+        $project = Projects::with('employees','team' , 'team.employees')->get();
         return $project;
     }
 
@@ -30,7 +32,7 @@ class ProjectController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
+     *E
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */

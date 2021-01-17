@@ -13,10 +13,16 @@ class Projects extends Model
     ];
     
     public function employees(){
-        return $this->belongsToMany(Employees::class);
+        return $this->belongsToMany(Employees::class , 'employees_roles_projects' , 'employee_id' , 'project_id');
     }
     public function team(){
-        return $this->belongsToMany(Teams::class);
+        return $this->belongsToMany(Teams::class , 'teams_projects'  , 'project_id', 'team_id' );
     }
+
+    public function roles(){
+        return $this->belongsToMany(Roles::class , 'employees_roles_projects', 'project_id' ,'role_id' );
+        // ,'employee_id' 
+    }
+
 
 }

@@ -24,9 +24,10 @@ class Employees extends Model
     //     return $this->belongsToMany(Projects::class , 'employees_roles_projects','employee_id','project_id','role_id');
     // }
 
-    // public function roles(){
-    //     return $this->belongsToMany(Roles::class , 'employees_roles_projects', 'employee_id' , 'role_id','project_id');
-    // }
+    public function roles(){
+        return $this->belongsToMany(Roles::class , 'employees_roles_projects', 'employee_id','role_id');
+        // 'projects'
+    }
 
     public function projects(){
         return $this->belongsToMany('App\Projects' , 'employees_roles_projects' , 'employee_id' , 'project_id')->using('App\Employees_Projects_Roles')->withPivot('role_id');

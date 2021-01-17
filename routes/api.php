@@ -33,14 +33,16 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     Route::resource('/kpi' , 'KpiController');
     Route::resource('/team' , 'TeamController');
     Route::resource('/assign' , 'AssignController');
+    Route::resource('/project' , 'ProjectController');
+    Route::resource('/employee' , 'EmployeeController');
     Route::resource('/teamproject','TeamProjectController');
+    Route::resource('/role' , 'RoleController');
+    Route::resource('/EmployeeProjectRole','EmployeeProjectRoleController');
 });
-Route::resource('/project' , 'ProjectController');
 
-Route::resource('/employee' , 'EmployeeController');
 
-Route::resource('/role' , 'RoleController');
-Route::resource('/EmployeeProjectRole','EmployeeProjectRoleController');
+
+
 
 
 
