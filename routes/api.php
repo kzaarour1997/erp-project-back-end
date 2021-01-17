@@ -26,12 +26,29 @@ Route::post('/login', 'AuthController@login');
 
 Route::group(['middleware' => ['jwt.verify']], function() {
     Route::post('/register' , 'AuthController@register');
-    Route::post('/logout', 'AuthController@logout'); 
+    Route::post('/logout', 'AuthController@logout');
     Route::get('/login' , 'AuthController@login' );
     Route::resource('users' , 'AdminController');
     Route::resource('/change' , 'PasswordController');
+    Route::resource('/kpi' , 'KpiController');
+    Route::resource('/team' , 'TeamController');
+    Route::resource('/assign' , 'AssignController');
+    Route::resource('/project' , 'ProjectController');
+    Route::resource('/employee' , 'EmployeeController');
+    Route::resource('/teamproject','TeamProjectController');
+    Route::resource('/role' , 'RoleController');
+    Route::resource('/EmployeeProjectRole','EmployeeProjectRoleController');
 });
 
 
 
-    
+
+
+
+
+
+
+
+
+
+
